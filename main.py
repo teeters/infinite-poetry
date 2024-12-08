@@ -3,6 +3,8 @@ from word_processing import *
 from time import sleep
 import os
 
+AGE_PATH = ".age"
+
 def say(msg, delay=.02):
     for c in msg:
         print(c, end="", flush=True)
@@ -26,6 +28,19 @@ def get_advice():
 
 def get_forced():
     return os.environ.get('FORCED_IMAGE')
+
+def read_age():
+    age = 0
+    if os.path.exists(AGE_PATH):
+        with open(AGE_PATH, "r") as f:
+            age = int(f.read())
+    return age
+
+def increase_age(age):
+    age += 1
+    with open(AGE_PATH, 'w') as f:
+        f.write(str(age))
+    return age
 
 def free_associate(seeds, p=True):
     word_cloud = ""
@@ -54,7 +69,7 @@ def decay(poem, forced, age):
     
 def main():
     intro()
-    age = 0
+    age = read_age()
 
     while True:
         seeds = get_seeds()
@@ -68,13 +83,13 @@ def main():
         poem = get_poem(words, advice, forced)
         poem = decay(poem, forced, age)
         say(poem)
+        age = increase_age(age)
         print()
 
         if should_break():
             break
         else:
             print()
-            age += 1
             continue
         
 if __name__ == '__main__':
