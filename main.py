@@ -48,7 +48,9 @@ def should_break():
     return (answer in acceptable_no)
 
 def decay(poem, forced, age):
-    return ablate_words(poem, forced, int(2*age))
+    num_words = len(poem.split(' '))
+    num_to_ablate = int(age/2/10 * num_words)
+    return ablate_words(poem, forced, num_to_ablate)
     
 def main():
     intro()
