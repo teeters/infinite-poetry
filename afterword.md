@@ -26,9 +26,9 @@ while True:
         age = increase_age(age)
         print()
 
-        if should_break():
-            break
-        else:
+        if get_consent():
             print()
             continue
+        else:
+            break
 ```
