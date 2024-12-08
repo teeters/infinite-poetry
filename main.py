@@ -52,7 +52,7 @@ def free_associate(seeds, p=True):
     print()
     return word_cloud
 
-def should_break():
+def get_consent():
     acceptable_yes = ['yes', 'Yes', 'y', '']
     acceptable_no = ['no', 'No', 'n']
     say("Do you wish to continue?")
@@ -60,7 +60,7 @@ def should_break():
     while (answer not in acceptable_yes) and (answer not in acceptable_no):
         say(f"Do you wish to continue? (Y/n)")
         answer = input()
-    return (answer in acceptable_no)
+    return (answer in acceptable_yes)
 
 def decay(poem, forced, age):
     num_words = len(poem.split(' '))
@@ -86,11 +86,11 @@ def main():
         age = increase_age(age)
         print()
 
-        if should_break():
-            break
-        else:
+        if get_consent():
             print()
             continue
+        else:
+            break            
         
 if __name__ == '__main__':
     main()
